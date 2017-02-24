@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>自定义checkbox和radio</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        label input[type=checkbox]{
+            width: 16px;
+            height: 16px;
+            display: block;
+            background: url('img/sprite.png') no-repeat 0px -16px;
+        }
+        label input:checked {
+            background-position: 16px -16px;
+        }
+        label input{
+            width: 1px;
+        }
+    </style>
+</head>
+<body>
+<label><input type="checkbox"></label>
+<label><input type="radio"></label>
+</body>
+</html>
