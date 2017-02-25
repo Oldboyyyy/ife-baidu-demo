@@ -116,6 +116,8 @@
             this.meau.style.cssText += ';left:'+ left + 'px;top:'+ top + 'px;display:' + 'block;visibility:visible;';
 
             e.preventDefault(); //阻止默认事件
+            e.returnValue = false;
+            return false;
         };
         /**
          * 创建菜单dom，并且插入到body中
