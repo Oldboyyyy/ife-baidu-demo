@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>自定义右键菜单</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+    .meau {
+        border: 1px solid #ccc;
+        box-shadow: 0px 0px 13px #ccc;
+        width: 125px;
+        padding: 5px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        visibility: hidden;
+        z-index: 100;
+    }
+
+    li {
+        list-style-type: none;
+        padding: 5px 10px;
+        cursor: pointer;
+    }
+
+    li:hover {
+        background-color: #ccc;
+    }
+</style>
+<body>
+
+<script>
+
+    ;(function (window, document, undefined) {
+        var myMeau = function(){
+            this.init.apply(this, arguments)
+        };
+        myMeau.prototype.init = function( arr){
+            var M = this;
+            this.data = arr;
+            this.createHtml();
+            this.meau = document.getElementById('meau');
+            this.addEvent(document, 'contextmenu', function(e){M.show(e, M)});
+            this.addEvent(M.meau, 'click', function(e){
+                var e = window.event || e;
+                if (e.stopPropagation) {
+                    e.stopPropagation();
+                } else {
+                    e.cancelBubble = true;
+                }
+            });
+            this.addEvent(document, 'click', function(){
+                M.meau.style.display = 'none';
+            });
+        };
+        /**
+         * 绑定事件
+         * @param el 要绑定的元素
+         * @param event 要绑定的事件
+         * @param fn 绑定的回调函数
+         * @returns {*}
+         */
+        myMeau.prototype.addEvent = function (el, event, fn) {
+            var M = this;
+            return document.addEventListener ? el.addEventListener(event, fn, false) : el.attachEvent('on' + event, fn)
+        };
+        /**
+         * 获取浏览器窗口大小
+         * @returns {{width: *, height: *}} 返回带有宽高的对象
+         */
+        myMeau.prototype.getWindowWH = function () {
+            var winWidth, winHeight;
+            if (window.innerWidth)
+                winWidth = window.innerWidth;
+            else if ((document.body) && (document.body.clientWidth))
+                winWidth = document.body.clientWidth;
+
+            if (window.innerHeight)
+                winHeight = window.innerHeight;
+            else if ((document.body) && (document.body.clientHeight))
+                winHeight = document.body.clientHeight;
+            if (document.documentElement && document.documentElement.clientHeight && document.documentElement.clientWidth) {
+                winHeight = document.documentElement.clientHeight;
+                winWidth = document.documentElement.clientWidth;
+            }
+            return {
+                width: winWidth,
+                height: winHeight
+            }
+        };
+        /**
+         * 菜单显示回调函数
+         * @param e 鼠标事件
+         * @param that meau对象
+         */
+        myMeau.prototype.show = function(e,that){
+            var e = window.event || e, //兼容低版本ie
+                    left = e.clientX,
+                    top = e.clientY,
+                    height = that.meau.offsetHeight,
+                    width = that.meau.offsetWidth,
+                    winHeight = that.getWindowWH().height,
+                    winWidth = that.getWindowWH().width;
+
+            if (winWidth - left < width) {
+                left = left - width;
+            }
+            if (winHeight - top < height) {
+                top = top - height;
+            }
+
+            this.meau.style.cssText += ';left:'+ left + 'px;top:'+ top + 'px;display:' + 'block;visibility:visible;';
+
+            e.preventDefault(); //阻止默认事件
+        };
+        /**
+         * 创建菜单dom，并且插入到body中
+         */
+        myMeau.prototype.createHtml = function(){
+            var divfragment = document.createDocumentFragment(),
+                    divmeau = document.createElement('div'),
+                    ul = document.createElement('ul'),
+                    i = 0,
+                    len = this.data.length;
+            for(;i < len; i++){
+                var li = document.createElement('li'),
+                        item = this.data[i];
+                li.innerHTML = (i + 1) + '.' + item;
+                ul.appendChild(li);
+            }
+            divmeau.appendChild(ul);
+            divfragment.appendChild(divmeau);
+            divmeau.id = 'meau';
+            divmeau.className = 'meau';
+            document.body.appendChild(divfragment);
+        };
+
+        window.myMeau = myMeau;
+    })(window, document);
+
+    new myMeau(['菜单1', '菜单2', '菜单3', '菜单4', '菜单5']);
+</script>
+</body>
+</html>
