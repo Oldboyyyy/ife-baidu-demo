@@ -8,22 +8,53 @@
             margin: 0;
             padding: 0;
         }
-        label input[type=checkbox]{
+        label{
+            background: transparent;
+            padding-left: 20px;
+            position: relative;
+            left: 0;
+            top:0;
+            cursor: pointer;
+        }
+        label input:before{
+            content: '';
             width: 16px;
             height: 16px;
             display: block;
-            background: url('img/sprite.png') no-repeat 0px -16px;
+            position: relative;
+            left: -20px;
         }
-        label input:checked {
-            background-position: 16px -16px;
-        }
+
         label input{
-            width: 1px;
+            width: 0;
+            color: #fff;
+            outline: none;
+            border: none;
         }
+        label input[type=checkbox]:before{
+            background: url('img/sprite.png') no-repeat 0 -16px;
+        }
+        label input[type=checkbox]:checked:before{
+            background: url('img/sprite.png') no-repeat -16px -16px;
+        }
+        label input[type=radio]:before{
+            background: url('img/sprite.png') no-repeat -16px 0;
+        }
+        label input[type=radio]:checked:before{
+            background: url('img/sprite.png') no-repeat 0 0;
+        }
+
+
+
     </style>
 </head>
 <body>
-<label><input type="checkbox"></label>
-<label><input type="radio"></label>
+<label><input type="checkbox">电影</label>
+<label><input type="checkbox">电影</label>
+<label><input type="checkbox">电影</label>
+<label><input type="checkbox">电影</label>
+<br>
+<label><input type="radio" name="sex">男男男男男男男</label>
+<label><input type="radio" name="sex">女</label>
 </body>
 </html>
