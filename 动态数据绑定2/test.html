@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="emitter.js"></script>
+<script src="Observer.js"></script>
+<script>
+    var data = {
+        name: 'tom',
+        age: 15,
+        cc: {
+            a:'a'
+        }
+    }
+    var obj = new Observer(data);
+
+    obj.data.name.firstname;
+    obj.data.name.lastname = 'one'
+    obj.$watch('name', function(val, newval){
+        console.log('我变了，变成了'+newval)
+    })
+    obj.$watch('name', function(val, newval){
+        console.log('我原来是'+val+'，变成了'+newval)
+    })
+    obj.data.name = 'two'
+</script>
+</body>
+</html>
