@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="Observer.js"></script>
+    <script>
+        var obj = {
+            id: 1,
+            name: {
+                firstname: {
+                    a: 'a'
+                },
+                lastname: 'cheng'
+            }
+        }
+        var a = new Observer(obj)
+        a.$watch('name',function(k,v,newVal){
+            console.log(k,v,newVal)
+        })
+        a.$watch('name.firstname',function(k,v,newVal){
+            console.log(k,v,newVal)
+        })
+    </script>
+</head>
+<body>
+
+</body>
+</html>
