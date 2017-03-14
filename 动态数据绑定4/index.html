@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="Observer.js"></script>
+    <script src="Vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <p>姓名：{{user.name}}</p>
+        <p>年龄：{{user.age}}</p>
+    </div>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                user: {
+                    name: 'youngwind',
+                    age: 25
+                }
+            }
+        });
+    </script>
+</body>
+</html>
